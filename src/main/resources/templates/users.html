@@ -1,0 +1,23 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<!--<p th:text = "${userDtoList}"></p>-->
+
+<tr th:each="userDtoList : ${userDtoList}">
+    <td th:text="${userDtoList.getId()}"/>
+    <td th:text="${userDtoList.getUserName()}"/>
+    <td th:text="${userDtoList.getEmail()}"/>
+    <a th:href="@{'/user/'+${userDtoList.getId()}}">Detail User Info</a>
+    <a th:href="@{'/user/delete/'+${userDtoList.getId()}}">Delete</a>
+    <hr>
+</tr>
+
+<a href="/home" > home </a>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+<style>
+    body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: black;
+    }
+
+    * {
+    box-sizing: border-box;
+    }
+
+    /* Add padding to containers */
+    .container {
+    padding: 16px;
+    background-color: white;
+    }
+
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    }
+
+    input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+    }
+
+    /* Overwrite default styles of hr */
+    hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .createbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    }
+
+    .createbtn:hover {
+    opacity: 1;
+    }
+
+    /* Add a blue text color to links */
+    a {
+    color: dodgerblue;
+    }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li><a class="active" href="/home">Home</a></li>
+</ul>
+
+<div class="container">
+    <h1>Create Post</h1>
+    <p>Please fill in this form to create a post.</p>
+    <hr>
+
+    <label for="postName"><b>Post Name</b></label>
+    <input id="postName" type="text" name="postName" placeholder="Enter Post Name" required>
+
+    <label for="text"><b>Text</b></label>
+    <input id="text" type="text" name="text" placeholder="Enter text" required>
+
+    <label for="postFile">upload file</label>
+    <input id="postFile" type="file" name="postFile">
+
+    <hr>
+    <button onclick="uploadFile()" id="savePost">save</button>
+<!--    <button onclick="createPost()"  class="createbtn">Create</button>-->
+</div>
+
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function savePost(fileId) {
+
+        let postName = document.getElementById('postName').value;
+        let text = document.getElementById('text').value;
+
+        console.log(fileId);
+
+
+        let request = {
+            'postName': postName,
+            'text': text,
+            'fileId': fileId
+        }
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/createPost",
+            data: JSON.stringify(request),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                console.log(data);
+                // window.location.href = 'postsPage';
+            },
+            error: function (error) {
+                console.log("ERROR : ", error);
+            }
+        });
+    }
+
+    function uploadFile() {
+        let formData = new FormData();
+        formData.append("file", postFile.files[0]);
+        $.ajax({
+            url: "/file",//?
+            type: 'POST',
+            data: formData,
+            enctype: 'multipart/form-data',
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            cache: false,
+            success: function(res) {
+                console.log(res);
+                savePost(res.id)
+            },
+            error: function(res) {
+                console.log('ERR: ' + res);
+            }
+        });
+    }
+</script>
+
+
+</script>
+</body>
+</html>

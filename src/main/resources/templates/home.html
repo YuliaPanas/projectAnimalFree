@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>HomePage</title>
+
+  <style>
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: left;
+        border-right:2px solid #bbb;
+      }
+
+      li:last-child {
+        border-right: none;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #0000;
+      }
+
+      /*@media screen and (max-width: 600px) {*/
+      /*  .topnav a {*/
+      /*    float: none;*/
+      /*    width: 100%;*/
+      /*  }*/
+
+      .active {
+        background-color: #04AA6D;
+      }
+      .navbar {
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .navbar a:hover {
+        background: #f1f1f1;
+        color: black;
+      }
+
+      .navbar a.active {
+        background-color: black;
+        color: white;
+      }
+
+
+
+  </style>
+</head>
+
+<body>
+
+<ul class="topnav">
+  <li><a class="active" href="/aboutUs">AnimalFree</a></li>
+  <li><a href="/postsPage">Posts</a></li>
+  <li><a href="/login">Log in</a></li>
+  <li><a href="/register">Register</a></li>
+  <li style="float:right"><a href="/contact">Contact</a></li>
+</ul>
+
+<h1 style="text-align: center">Are you ready to make your new friend happy ?</h1>
+
+<img src="https://i0.wp.com/highlysensitiverefuge.com/wp-content/uploads/2019/10/highly-sensitive-people-bond-with-animals.jpg?fit=1500%2C915&ssl=1"
+     alt="picture" width="1250" height="800">
+
+
+<div class="navbar" sec:authorize="hasRole('ROLE_ADMIN')">
+  <a class="active" href="/createPost" >Create Post</a>
+  <a href="/adminPage">Admin Page</a>
+</div>
+
+
+</body>
+</html>
